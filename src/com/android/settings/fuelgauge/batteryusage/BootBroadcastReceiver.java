@@ -64,6 +64,7 @@ public final class BootBroadcastReceiver extends BroadcastReceiver {
             case ACTION_SETUP_WIZARD_FINISHED:
                 Log.d(TAG, "refresh periodic job from action=" + action);
                 refreshJobs(context, true);
+                BatteryUsageDataLoader.enqueueWork(context, /* isFullChargeStart= */ false);
                 break;
             case ACTION_PERIODIC_JOB_RECHECK:
                 Log.d(TAG, "refresh periodic job from action=" + action);

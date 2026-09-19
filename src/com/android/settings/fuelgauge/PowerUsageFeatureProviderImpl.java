@@ -244,7 +244,7 @@ public class PowerUsageFeatureProviderImpl implements PowerUsageFeatureProvider 
 
     @Override
     public boolean delayHourlyJobWhenBooting() {
-        return true;
+        return false;
     }
 
     @Override
