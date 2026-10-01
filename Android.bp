@@ -56,6 +56,7 @@ android_library {
         "src/**/*.java",
         "src/**/*.kt",
         "src/**/*.aidl",
+        ":evolution-routines-settings-srcs",
         "Evolver/src/**/*.java",
         "Evolver/src/**/*.kt",
     ],
@@ -68,6 +69,7 @@ android_library {
     aaptflags: ["--extra-packages org.evolution.settings"],
 
     resource_dirs: [
+        "routines-res",
         "res",
         "res-export", // for external usage
         "res-product",
@@ -79,6 +81,16 @@ android_library {
     optional_uses_libs: ["com.android.extensions.appfunctions"],
     static_libs: [
         // External dependencies
+        "androidx.activity_activity-compose",
+        "androidx.compose.animation_animation",
+        "androidx.compose.animation_animation-core",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.material3_material3",
+        "androidx.compose.material_material-icons-core",
+        "androidx.compose.material_material-icons-extended",
+        "androidx.compose.runtime_runtime",
+        "androidx.compose.ui_ui",
+        "kotlinx-coroutines-core",
         "androidx.compose.runtime_runtime-livedata",
         "androidx.lifecycle_lifecycle-livedata-ktx",
         "androidx.navigation_navigation-fragment-ktx",
