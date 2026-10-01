@@ -287,7 +287,7 @@
         <activity android:name="org.evolution.settings.fragments.routines.RoutinesActivity"
                   android:exported="false"
                   android:label="@string/routines"
-                  android:theme="@style/Theme.Settings.NoActionBar" />
+                  android:theme="@style/Theme.SubSettings" />
 
         <activity android:name=".SubSettings"
                   android:exported="false"
