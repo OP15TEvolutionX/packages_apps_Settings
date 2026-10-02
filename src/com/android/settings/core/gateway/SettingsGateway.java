@@ -230,6 +230,7 @@ import com.android.settings.wifi.tether.WifiTetherSettings;
 import org.evolution.settings.EvolutionSettings;
 import org.evolution.settings.display.refreshrate.ScreenRefreshRateFragment;
 import org.evolution.settings.fragments.miscellaneous.SmartPixels;
+import org.evolution.settings.fragments.miscellaneous.IdleManagerSettings;
 
 public class SettingsGateway {
 
@@ -446,6 +447,7 @@ public class SettingsGateway {
             SafetyCenterQsFragment.class.getName(),
             PrivateDnsSettings.class.getName(),
             SmartPixels.class.getName(),
+            IdleManagerSettings.class.getName(),
             RunningServices.class.getName(),
             ScreenRefreshRateFragment.class.getName(),
     };
