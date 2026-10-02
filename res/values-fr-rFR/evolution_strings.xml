@@ -274,9 +274,6 @@ Les notifications flottantes seront automatiquement désactivées.</string>
     <string name="pattern_custom">Personnalisé</string>
     <string name="custom_vibration_pattern_title">Modèle personnalisé</string>
     <string name="custom_vibration_pattern_summary">Définir un modèle de vibration personnalisé</string>
-    <!-- Idle manager -->
-    <string name="idle_manager_title">Gestionnaire d\'inactivité</string>
-    <string name="idle_manager_summary">Arrêter tous les processus non essentiels en arrière-plan lorsque l\'appareil est inactif</string>
     <!-- fingerprint lockout -->
     <string name="fingerprint_lockout_title">Désactiver le verrouillage par empreinte digitale</string>
     <string name="fingerprint_lockout_summary">Désactive le délai d\'attente de 30 secondes ainsi que le verrouillage permanent après plusieurs tentatives de déverrouillage par empreinte échouées</string>

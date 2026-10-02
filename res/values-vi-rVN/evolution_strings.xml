@@ -173,9 +173,6 @@
     <string name="always_on_display_schedule_sunrise">Bình minh</string>
     <string name="always_on_display_schedule_mixed_sunset">Bật từ hoàng hôn cho đến một thời gian nhất định</string>
     <string name="always_on_display_schedule_mixed_sunrise">Bật từ một thời gian nhất định cho đến bình minh</string>
-    <!-- Idle manager -->
-    <string name="idle_manager_title">Quản lý chế độ chờ</string>
-    <string name="idle_manager_summary">Dừng các tiến trình nền không cần thiết khi máy ở chế độ chờ</string>
     <!-- fingerprint lockout -->
     <string name="fingerprint_lockout_title">Tắt khóa vân tay</string>
     <string name="fingerprint_lockout_summary">Vô hiệu hóa thời gian chờ 30 giây và khóa vĩnh viễn sau nhiều lần thử vân tay thất bại</string>
