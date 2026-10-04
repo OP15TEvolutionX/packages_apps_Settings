@@ -17,19 +17,12 @@
 package com.android.settings.gestures;
 
 import android.content.Context;
-import android.hardware.display.AmbientDisplayConfiguration;
-import android.provider.Settings;
 
 import androidx.annotation.NonNull;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceScreen;
 
-import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
 public class DoubleTapAmbientSettingsPreferenceController extends BasePreferenceController {
-
-    private AmbientDisplayConfiguration mAmbientConfig;
 
     public DoubleTapAmbientSettingsPreferenceController(@NonNull Context context, @NonNull String key) {
         super(context, key);
@@ -37,29 +30,12 @@ public class DoubleTapAmbientSettingsPreferenceController extends BasePreference
 
     @Override
     public int getAvailabilityStatus() {
-        boolean nativeDoubleTapToDozeAvailable = !android.text.TextUtils.isEmpty(
-                mContext.getResources().getString(com.android.internal.R.string.config_dozeDoubleTapSensorType));
-        // avoid conflict with single tap sensor devices e.g: pixels
-        boolean singleTapSensorAvailable = getAmbientConfig().tapSensorAvailable();
-        boolean supported = !nativeDoubleTapToDozeAvailable && !singleTapSensorAvailable;
-        return supported ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
-    }
-
-    @Override
-    public void displayPreference(@NonNull PreferenceScreen screen) {
-        super.displayPreference(screen);
+        return UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
     @NonNull
     public CharSequence getSummary() {
         return mContext.getText(com.android.settings.R.string.doze_double_tap_summary);
-    }
-    
-    private AmbientDisplayConfiguration getAmbientConfig() {
-        if (mAmbientConfig == null) {
-            mAmbientConfig = new AmbientDisplayConfiguration(mContext);
-        }
-        return mAmbientConfig;
     }
 }

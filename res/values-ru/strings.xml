@@ -1452,7 +1452,6 @@
     <string name="screensaver_settings_summary_off" msgid="8720357504939106923">"Отключено"</string>
     <string name="screensaver_settings_when_to_dream" msgid="7756170756065029160">"Когда включать"</string>
     <string name="screensaver_settings_low_light_mode" msgid="271972828076673743">"Режим низкой освещенности"</string>
-    <string name="lift_to_wake_title" msgid="8994218158737714046">"Активация в вертикальном положении"</string>
     <string name="screensaver_restrict_to_wireless_charging_title" msgid="8016059995446029358">"Только при беспроводной зарядке"</string>
     <string name="blur_switch" msgid="1391073945502754948">"Уменьшить размытие"</string>
     <string name="blur_switch_summary" msgid="5025895302219948597">"Фоны и панели будут видны отчетливее"</string>
@@ -6233,4 +6232,5 @@
     <string name="permit_access_hid" msgid="870824396872060949">"Разрешить приложению обнаруживать HID-устройства"</string>
     <string name="allow_access_hid_description" msgid="5950783046013896271">"Если вы предоставите доступ к HID-устройствам, вредоносные приложения смогут перепрограммировать их и поставить под угрозу безопасность вашей системы. Например, приложения могут имитировать ввод с клавиатуры или мыши, чтобы управлять системой, когда она закрыта. Предоставляйте доступ только тем приложениям, которым доверяете."</string>
     <string name="keywords_access_hid" msgid="682455265293135353">"hid, человек, доступ, устройство"</string>
+    <string name="lift_to_wake_title">Поднять, чтобы проверить телефон</string>
 </resources>
