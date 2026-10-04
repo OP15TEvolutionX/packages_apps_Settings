@@ -19,7 +19,7 @@ public class DoubleTapScreenToSleepPreferenceController
 
     @Override
     public int getAvailabilityStatus() {
-        return 0; // AVAILABLE
+        return UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
