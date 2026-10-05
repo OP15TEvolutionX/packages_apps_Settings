@@ -58,6 +58,7 @@ android_library {
         "src/**/*.aidl",
         ":evolution-routines-settings-srcs",
         ":evolution-idle-manager-settings-srcs",
+        ":evolution-kernel-manager-settings-srcs",
         "Evolver/src/**/*.java",
         "Evolver/src/**/*.kt",
     ],
@@ -72,6 +73,7 @@ android_library {
     resource_dirs: [
         "routines-res",
         "idle-manager-res",
+        "kernel-manager-res",
         "res",
         "res-export", // for external usage
         "res-product",

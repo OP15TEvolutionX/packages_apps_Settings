@@ -231,6 +231,7 @@ import org.evolution.settings.EvolutionSettings;
 import org.evolution.settings.display.refreshrate.ScreenRefreshRateFragment;
 import org.evolution.settings.fragments.miscellaneous.SmartPixels;
 import org.evolution.settings.fragments.miscellaneous.IdleManagerSettings;
+import org.evolution.settings.fragments.miscellaneous.KernelManagerSettings;
 
 public class SettingsGateway {
 
@@ -448,6 +449,7 @@ public class SettingsGateway {
             PrivateDnsSettings.class.getName(),
             SmartPixels.class.getName(),
             IdleManagerSettings.class.getName(),
+            KernelManagerSettings.class.getName(),
             RunningServices.class.getName(),
             ScreenRefreshRateFragment.class.getName(),
     };
