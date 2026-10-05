@@ -80,6 +80,13 @@
             android:fragment="org.evolution.settings.fragments.miscellaneous.IdleManagerSettings" />
 
         <Preference
+            android:key="kernel_manager"
+            android:title="@string/kernel_manager_title"
+            android:summary="@string/kernel_manager_summary"
+            settings:controller="org.evolution.settings.fragments.miscellaneous.KernelManagerPreferenceController"
+            android:fragment="org.evolution.settings.fragments.miscellaneous.KernelManagerSettings" />
+
+        <Preference
             android:key="app_battery_usage"
             android:title="@string/app_battery_usage_title"
             settings:controller="com.android.settings.fuelgauge.AppBatteryUsagePrefController" />
