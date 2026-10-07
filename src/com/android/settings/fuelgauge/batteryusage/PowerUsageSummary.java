@@ -22,6 +22,7 @@ import static com.android.settingslib.Utils.KEY_WIRELESS_INCOMPATIBLE_CHARGING_S
 import android.app.Activity;
 import android.app.settings.SettingsEnums;
 import android.content.Context;
+import android.content.ComponentName;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import com.android.settings.fuelgauge.batterytip.tips.BatteryTip;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
+import com.android.settingslib.drawer.Tile;
 
 import java.util.List;
 
@@ -176,6 +178,19 @@ public class PowerUsageSummary extends PowerUsageBase
     @Override
     protected int getPreferenceScreenResId() {
         return R.xml.power_usage_summary;
+    }
+
+    @Override
+    protected boolean displayTile(Tile tile) {
+        final boolean display = super.displayTile(tile);
+        final ComponentName component = tile.getIntent().getComponent();
+        if (component != null
+                && "com.google.android.settings.intelligence".equals(component.getPackageName())
+                && "com.google.android.settings.intelligence.modules.battery.impl.health.BHSettingsActivity"
+                        .equals(component.getClassName())) {
+            return false;
+        }
+        return display;
     }
 
     @Override
