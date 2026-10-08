@@ -185,10 +185,16 @@ public class PowerUsageSummary extends PowerUsageBase
         final boolean display = super.displayTile(tile);
         final ComponentName component = tile.getIntent().getComponent();
         if (component != null
-                && "com.google.android.settings.intelligence".equals(component.getPackageName())
-                && "com.google.android.settings.intelligence.modules.battery.impl.health.BHSettingsActivity"
-                        .equals(component.getClassName())) {
-            return false;
+                && "com.google.android.settings.intelligence".equals(component.getPackageName())) {
+            switch (component.getClassName()) {
+                case "com.google.android.settings.intelligence.modules.battery.impl.health.BHSettingsActivity":
+                case "com.google.android.settings.intelligence.modules.battery.impl.chargingoptimization.ChargingOptimizationActivity":
+                case "com.google.android.settings.intelligence.modules.battery.impl.chargingoptimization.ChargingOptimizationActivityInject":
+                case "com.google.android.settings.intelligence.modules.battery.impl.chargingoptimization.entry.BatteryChargingEntryInject":
+                    return false;
+                default:
+                    break;
+            }
         }
         return display;
     }
