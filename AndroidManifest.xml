@@ -284,6 +284,12 @@
                   android:excludeFromRecents="true"
                   android:theme="@*android:style/Theme.DeviceDefault.Dialog.Alert.DayNight"/>
 
+        <provider android:name="org.evolution.settings.clipboardsync.ClipboardSyncConfigProvider"
+                  android:authorities="com.android.settings.clipboardsync"
+                  android:exported="true"
+                  android:permission="android.permission.STATUS_BAR"
+                  android:directBootAware="false" />
+
         <activity android:name="org.evolution.settings.fragments.routines.RoutinesActivity"
                   android:exported="false"
                   android:label="@string/routines"
