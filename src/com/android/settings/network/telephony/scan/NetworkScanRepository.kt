@@ -20,6 +20,10 @@ import android.content.Context
 import android.telephony.AccessNetworkConstants.AccessNetworkType
 import android.telephony.CarrierConfigManager
 import android.telephony.CellInfo
+import android.telephony.CellInfoGsm
+import android.telephony.CellInfoLte
+import android.telephony.CellInfoWcdma
+import android.telephony.NetworkScan
 import android.telephony.NetworkScanRequest
 import android.telephony.PhoneCapability
 import android.telephony.RadioAccessSpecifier
@@ -27,6 +31,9 @@ import android.telephony.TelephonyManager
 import android.telephony.TelephonyScanManager
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
+import com.android.internal.telephony.CellNetworkScanResult
+import com.android.settings.network.telephony.CellInfoUtil.getOperatorNumeric
+import com.android.settings.network.telephony.CellInfoUtil.toCellInfo
 import com.android.settings.R
 import com.android.settings.network.telephony.CellInfoUtil.getNetworkTitle
 import com.android.settings.network.telephony.telephonyManager
@@ -85,6 +92,14 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
             }
 
             override fun onError(error: Int) {
+                if (error == NetworkScan.ERROR_UNSUPPORTED) {
+                    Log.d(TAG, "network scan unsupported, falling back to legacy query")
+                    try {
+                        if (queryAvailableNetworks()) return
+                    } catch (e: Exception) {
+                        Log.w(TAG, "legacy network query failed, falling back to visible cells", e)
+                    }
+                }
                 Log.w(TAG, "network scan onError: $error, falling back to visible cells")
                 val fallbackCells = getFallbackCellInfos()
                 if (fallbackCells.isNotEmpty() && cellInfos.isEmpty()) {
@@ -96,6 +111,31 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
                     sendResult()
                 }
                 close()
+            }
+
+            private fun queryAvailableNetworks(): Boolean {
+                val result = telephonyManager.getAvailableNetworks()
+                if (result.status == CellNetworkScanResult.STATUS_SUCCESS) {
+                    // The legacy query lists every PLMN once per RAT,
+                    // keep the registered or best one
+                    cellInfos = result.operators.orEmpty()
+                        .mapNotNull { it.toCellInfo() }
+                        .groupBy { it.cellIdentity.getOperatorNumeric() }
+                        .values
+                        .map { infos ->
+                            infos.maxWith(compareBy<CellInfo>(
+                                { it.isRegistered },
+                                { LEGACY_RAT_ORDER.indexOf(it.javaClass) },
+                            ))
+                        }
+                    if (cellInfos.isEmpty()) return false
+                    state = NetworkScanState.COMPLETE
+                } else {
+                    return false
+                }
+                sendResult()
+                close()
+                return true
             }
 
             private fun sendResult() {
@@ -214,5 +254,11 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
         private const val TAG = "NetworkScanRepository"
 
         private const val INCREMENTAL_RESULTS_PERIODICITY_SEC = 3
+
+        private val LEGACY_RAT_ORDER = listOf(
+            CellInfoGsm::class.java,
+            CellInfoWcdma::class.java,
+            CellInfoLte::class.java,
+        )
     }
 }
