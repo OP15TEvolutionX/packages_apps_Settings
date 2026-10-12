@@ -284,6 +284,12 @@
                   android:excludeFromRecents="true"
                   android:theme="@*android:style/Theme.DeviceDefault.Dialog.Alert.DayNight"/>
 
+        <provider android:name="org.evolution.settings.clipp.ClippConfigProvider"
+                  android:authorities="com.android.settings.clipp" android:process=":clippconfig"
+                  android:exported="true"
+                  android:permission="android.permission.STATUS_BAR"
+                  android:directBootAware="false" />
+
         <activity android:name="org.evolution.settings.fragments.routines.RoutinesActivity"
                   android:exported="false"
                   android:label="@string/routines"

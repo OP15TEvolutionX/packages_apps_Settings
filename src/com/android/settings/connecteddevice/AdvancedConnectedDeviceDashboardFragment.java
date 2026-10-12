@@ -44,6 +44,7 @@ import java.util.List;
 public class AdvancedConnectedDeviceDashboardFragment extends DashboardFragment {
 
     private static final String TAG = "AdvancedConnectedDeviceFrag";
+    private final java.util.Map<String, Integer> mClipboardBaseOrders = new java.util.HashMap<>();
 
     static final String KEY_BLUETOOTH = "bluetooth_settings";
     static final String KEY_UWB = "uwb_settings";
@@ -96,6 +97,46 @@ public class AdvancedConnectedDeviceDashboardFragment extends DashboardFragment 
     public void onResume() {
         super.onResume();
         forceUpdatePreferences();
+    }
+
+    @Override
+    protected void refreshDashboardTiles(String tag) {
+        androidx.preference.PreferenceScreen previous = getPreferenceScreen();
+        if (previous != null) {
+            java.util.ArrayList<androidx.preference.Preference> existing = new java.util.ArrayList<>();
+            for (int i = 0; i < previous.getPreferenceCount(); i++) existing.add(previous.getPreference(i));
+            for (androidx.preference.Preference item : existing) {
+                Integer order = mClipboardBaseOrders.get(String.valueOf(item.getKey()));
+                if (order != null) item.setOrder(order);
+            }
+        }
+        super.refreshDashboardTiles(tag);
+        androidx.preference.PreferenceScreen screen = getPreferenceScreen();
+        if (screen == null) return;
+        androidx.preference.Preference clipboard = screen.findPreference("clipboard_sync");
+        if (clipboard == null) return;
+        java.util.ArrayList<androidx.preference.Preference> items = new java.util.ArrayList<>();
+        androidx.preference.Preference quickShare = null;
+        for (int i = 0; i < screen.getPreferenceCount(); i++) {
+            androidx.preference.Preference item = screen.getPreference(i);
+            if (item == clipboard) continue;
+            items.add(item);
+            mClipboardBaseOrders.putIfAbsent(String.valueOf(item.getKey()), item.getOrder());
+            String key = String.valueOf(item.getKey()).toLowerCase(java.util.Locale.ROOT);
+            String title = String.valueOf(item.getTitle());
+            if (key.contains("nearby.sharing") || key.contains("nearby_sharing")
+                    || key.contains("quick_share") || key.contains("quickshare")
+                    || title.equals("Quick Share") || title.equals("Быстрая отправка")) {
+                quickShare = item;
+            }
+        }
+        if (quickShare == null) return;
+        // Leave space between dynamic tiles so Clipboard stays immediately after Quick Share.
+        for (int i = 0; i < items.size(); i++) {
+            androidx.preference.Preference item = items.get(i);
+            item.setOrder(1000 + i * 10);
+            if (item == quickShare) clipboard.setOrder(1005 + i * 10);
+        }
     }
 
     private static List<AbstractPreferenceController> buildControllers(Context context,
