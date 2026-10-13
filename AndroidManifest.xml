@@ -284,8 +284,8 @@
                   android:excludeFromRecents="true"
                   android:theme="@*android:style/Theme.DeviceDefault.Dialog.Alert.DayNight"/>
 
-        <provider android:name="org.evolution.settings.clipboardsync.ClipboardSyncConfigProvider"
-                  android:authorities="com.android.settings.clipboardsync"
+        <provider android:name="org.evolution.settings.clipp.ClippConfigProvider"
+                  android:authorities="com.android.settings.clipp" android:process=":clippconfig"
                   android:exported="true"
                   android:permission="android.permission.STATUS_BAR"
                   android:directBootAware="false" />

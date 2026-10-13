@@ -107,6 +107,6 @@
         android:title="@string/clipboard_sync_title"
         android:summary="@string/clipboard_sync_summary"
         android:icon="@drawable/ic_homepage_clipboard_sync"
-        android:fragment="org.evolution.settings.clipboardsync.ClipboardSyncSettings" />
+        android:fragment="org.evolution.settings.clipp.ClippSettings" />
 
 </PreferenceScreen>

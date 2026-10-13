@@ -57,7 +57,7 @@ android_library {
         "src/**/*.kt",
         "src/**/*.aidl",
         ":evolution-routines-settings-srcs",
-        ":evolution-clipboard-sync-settings-srcs",
+        ":evolution-clipp-settings-srcs",
         ":evolution-idle-manager-settings-srcs",
         ":evolution-kernel-manager-settings-srcs",
         "Evolver/src/**/*.java",
@@ -73,7 +73,7 @@ android_library {
 
     resource_dirs: [
         "routines-res",
-        "clipboard-sync-res",
+        "clipp-res",
         "idle-manager-res",
         "kernel-manager-res",
         "res",
@@ -255,6 +255,7 @@ android_app {
     ],
     use_embedded_native_libs: true,
     jni_libs: [
+        "libevolution_clipp_jni",
         "libtensorflowlite_jni",
         "libtensorflowlite_gpu_jni",
     ],
