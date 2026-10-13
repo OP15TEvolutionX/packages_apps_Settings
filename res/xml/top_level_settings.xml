@@ -71,14 +71,6 @@
         android:key="top_level_personalize_category"
         android:layout="@layout/settingslib_expressive_untitled_preference_category">
         <com.android.settings.widget.HomepagePreference
-            android:key="top_level_clipboard_sync"
-            android:order="-69"
-            android:title="@string/clipboard_sync_title"
-            android:summary="@string/clipboard_sync_summary"
-            android:icon="@drawable/ic_homepage_clipboard_sync"
-            android:fragment="org.evolution.settings.clipboardsync.ClipboardSyncSettings" />
-
-        <com.android.settings.widget.HomepagePreference
             android:key="top_level_routines"
             android:order="-70"
             android:title="@string/routines"
