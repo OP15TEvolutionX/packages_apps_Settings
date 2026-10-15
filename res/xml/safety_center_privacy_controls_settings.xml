@@ -118,5 +118,17 @@
             android:fragment="com.android.settings.location.LocationSettings"
             android:order="80">
         </Preference>
+
+        <!-- Clipboard read restrictions: enabled switches block app access. -->
+        <Preference
+            android:key="privacy_clipboard_access"
+            android:title="@string/clipboard_access_title"
+            android:summary="@string/clipboard_access_summary"
+            android:order="81">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="org.evolution.settings.clipboardaccess.ClipboardAccessActivity" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
