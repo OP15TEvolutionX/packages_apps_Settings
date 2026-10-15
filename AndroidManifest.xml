@@ -295,6 +295,11 @@
                   android:label="@string/routines"
                   android:theme="@style/Theme.SubSettings" />
 
+        <activity android:name="org.evolution.settings.clipboardaccess.ClipboardAccessActivity"
+                  android:exported="false"
+                  android:label="@string/clipboard_access_title"
+                  android:theme="@style/Theme.SubSettings" />
+
         <activity android:name=".SubSettings"
                   android:exported="false"
                   android:theme="@style/Theme.SubSettings"
