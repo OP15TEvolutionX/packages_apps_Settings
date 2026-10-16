@@ -58,6 +58,7 @@ android_library {
         "src/**/*.aidl",
         ":evolution-routines-settings-srcs",
         ":evolution-clipboard-access-settings-srcs",
+        ":evolution-sensor-block-settings-srcs",
         ":evolution-clipp-settings-srcs",
         ":evolution-idle-manager-settings-srcs",
         ":evolution-kernel-manager-settings-srcs",
@@ -75,6 +76,7 @@ android_library {
     resource_dirs: [
         "routines-res",
         "clipboard-access-res",
+        "sensor-block-res",
         "clipp-res",
         "idle-manager-res",
         "kernel-manager-res",

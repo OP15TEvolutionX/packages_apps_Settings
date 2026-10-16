@@ -130,5 +130,17 @@
                 android:targetPackage="com.android.settings"
                 android:targetClass="org.evolution.settings.clipboardaccess.ClipboardAccessActivity" />
         </Preference>
+
+        <!-- Sensor block: per-package motion and environmental sensor restrictions. -->
+        <Preference
+            android:key="privacy_sensor_block"
+            android:title="@string/sensor_block_title"
+            android:summary="@string/sensor_block_summary"
+            android:order="82">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="org.evolution.settings.sensorblock.SensorBlockActivity" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
