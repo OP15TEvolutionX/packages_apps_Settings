@@ -18,7 +18,6 @@ package com.android.settings.network.telephony.scan
 
 import android.content.Context
 import android.telephony.AccessNetworkConstants.AccessNetworkType
-import android.telephony.CarrierConfigManager
 import android.telephony.CellInfo
 import android.telephony.CellInfoGsm
 import android.telephony.CellInfoLte
@@ -32,12 +31,14 @@ import android.telephony.TelephonyScanManager
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.android.internal.telephony.CellNetworkScanResult
-import com.android.settings.network.telephony.CellInfoUtil.getOperatorNumeric
-import com.android.settings.network.telephony.CellInfoUtil.toCellInfo
 import com.android.settings.R
 import com.android.settings.network.telephony.CellInfoUtil.getNetworkTitle
+import com.android.settings.network.telephony.CellInfoUtil.getOperatorNumeric
+import com.android.settings.network.telephony.CellInfoUtil.toCellInfo
 import com.android.settings.network.telephony.telephonyManager
 import com.android.settingslib.spa.framework.util.collectLatestWithLifecycle
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -47,7 +48,7 @@ import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 
-class NetworkScanRepository(private val context: Context, private val subId: Int) {
+class NetworkScanRepository(private val context: Context, subId: Int) {
     enum class NetworkScanState {
         ACTIVE, COMPLETE, ERROR
     }
@@ -94,28 +95,22 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
             override fun onError(error: Int) {
                 if (error == NetworkScan.ERROR_UNSUPPORTED) {
                     Log.d(TAG, "network scan unsupported, falling back to legacy query")
-                    try {
-                        if (queryAvailableNetworks()) return
-                    } catch (e: Exception) {
-                        Log.w(TAG, "legacy network query failed, falling back to visible cells", e)
-                    }
+                    queryAvailableNetworks()
+                    return
                 }
-                Log.w(TAG, "network scan onError: $error, falling back to visible cells")
-                val fallbackCells = getFallbackCellInfos()
-                if (fallbackCells.isNotEmpty() && cellInfos.isEmpty()) {
-                    cellInfos = fallbackCells.distinctBy { CellInfoScanKey(it) }
-                    state = NetworkScanState.COMPLETE
-                    sendResult()
-                } else {
-                    state = NetworkScanState.ERROR
-                    sendResult()
-                }
+                state = NetworkScanState.ERROR
+                sendResult()
                 close()
             }
 
-            private fun queryAvailableNetworks(): Boolean {
-                val result = telephonyManager.getAvailableNetworks()
-                if (result.status == CellNetworkScanResult.STATUS_SUCCESS) {
+            private fun queryAvailableNetworks() {
+                val result = try {
+                    legacyQuery().get()
+                } catch (e: Exception) {
+                    Log.w(TAG, "legacy network query failed", e)
+                    null
+                }
+                if (result != null && result.status == CellNetworkScanResult.STATUS_SUCCESS) {
                     // The legacy query lists every PLMN once per RAT,
                     // keep the registered or best one
                     cellInfos = result.operators.orEmpty()
@@ -128,14 +123,12 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
                                 { LEGACY_RAT_ORDER.indexOf(it.javaClass) },
                             ))
                         }
-                    if (cellInfos.isEmpty()) return false
                     state = NetworkScanState.COMPLETE
                 } else {
-                    return false
+                    state = NetworkScanState.ERROR
                 }
                 sendResult()
                 close()
-                return true
             }
 
             private fun sendResult() {
@@ -143,46 +136,36 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
             }
         }
 
-        val networkScan = try {
-            telephonyManager.requestNetworkScan(
-                createNetworkScan(),
-                // requestNetworkScan() could call callbacks concurrently, so we use a single thread
-                // to avoid racing conditions.
-                Executors.newSingleThreadExecutor(),
-                callback,
-            )
-        } catch (e: Exception) {
-            Log.e(TAG, "requestNetworkScan failed to start", e)
-            val fallbackCells = getFallbackCellInfos()
-            if (fallbackCells.isNotEmpty()) {
-                trySend(
-                    NetworkScanResult(
-                        NetworkScanState.COMPLETE,
-                        fallbackCells.distinctBy { CellInfoScanKey(it) },
-                    )
-                )
-            } else {
-                trySend(NetworkScanResult(NetworkScanState.ERROR, emptyList()))
-            }
-            close()
-            null
-        }
+        val networkScan = telephonyManager.requestNetworkScan(
+            createNetworkScan(),
+            // requestNetworkScan() could call callbacks concurrently, so we use a single thread
+            // to avoid racing conditions.
+            Executors.newSingleThreadExecutor(),
+            callback,
+        )
 
         awaitClose {
-            try {
-                networkScan?.stopScan()
-            } catch (e: Exception) {
-                Log.w(TAG, "network scan stopScan failed", e)
-            }
+            networkScan.stopScan()
             Log.d(TAG, "network scan stopped")
         }
     }.conflate().onEach { Log.d(TAG, "networkScanFlow: $it") }.flowOn(Dispatchers.Default)
 
-    private fun getFallbackCellInfos(): List<CellInfo> = runCatching {
-        telephonyManager.allCellInfo?.filter {
-            it.cellIdentity.getNetworkTitle() != null
-        } ?: emptyList()
-    }.getOrDefault(emptyList())
+    /**
+     * Returns the pending legacy query for this subscription, or starts one. The RIL can't
+     * handle overlapping QUERY_AVAILABLE_NETWORKS requests (NO_MEMORY / MODEM_ERR), and closing
+     * the scan flow doesn't cancel the query in the modem, so callers share a single request.
+     */
+    private fun legacyQuery(): CompletableFuture<CellNetworkScanResult> =
+        legacyQueries.compute(telephonyManager.subscriptionId) { _, pending ->
+            if (pending != null && !pending.isDone) {
+                pending
+            } else {
+                CompletableFuture.supplyAsync(
+                    { telephonyManager.getAvailableNetworks() },
+                    legacyQueryExecutor,
+                )
+            }
+        }!!
 
     /** Create network scan for allowed network types. */
     private fun createNetworkScan(): NetworkScanRequest {
@@ -191,17 +174,12 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
         val radioAccessSpecifiers = allowedNetworkTypes
             .map { RadioAccessSpecifier(it, null, null) }
             .toTypedArray()
-        val isIncremental = runCatching {
-            val carrierConfigManager = context.getSystemService(CarrierConfigManager::class.java)
-            carrierConfigManager?.getConfigForSubId(subId)
-                ?.getBoolean("incremental_network_scan_supported_bool", false)
-        }.getOrNull() ?: false
         return NetworkScanRequest(
             NetworkScanRequest.SCAN_TYPE_ONE_SHOT,
             radioAccessSpecifiers,
             NetworkScanRequest.MIN_SEARCH_PERIODICITY_SEC, // one shot, not used
             context.resources.getInteger(R.integer.config_network_scan_helper_max_search_time_sec),
-            isIncremental,
+            true,
             INCREMENTAL_RESULTS_PERIODICITY_SEC,
             null,
         )
@@ -260,5 +238,10 @@ class NetworkScanRepository(private val context: Context, private val subId: Int
             CellInfoWcdma::class.java,
             CellInfoLte::class.java,
         )
+
+        private val legacyQueryExecutor = Executors.newCachedThreadPool()
+
+        private val legacyQueries =
+            ConcurrentHashMap<Int, CompletableFuture<CellNetworkScanResult>>()
     }
 }

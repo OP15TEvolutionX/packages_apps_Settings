@@ -7,9 +7,6 @@
     <!-- Whether to show vendor security patch level -->
     <bool name="config_show_vendor_patch_level" translatable="false">true</bool>
 
-    <!-- Device image for HW info -->
-    <string name="config_deviceImageDrawable" translatable="false"></string>
-
     <!-- ComponentName to launch a vendor-specific enrollment activity if available -->
     <string name="config_face_enroll">com.android.settings/com.google.android.settings.biometrics.face.FaceEnrollActivityDirector</string>
 
@@ -35,4 +32,7 @@
 
     <!-- Whether to show double tap ambient settings -->
     <bool name="config_supports_double_tap_ambient" translatable="false">true</bool>
+
+    <!-- Device image for HW info -->
+    <string name="config_deviceImageDrawable" translatable="false"></string>
 </resources>

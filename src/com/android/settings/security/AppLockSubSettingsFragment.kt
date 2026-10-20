@@ -49,7 +49,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -80,6 +79,7 @@ import com.android.internal.widget.LockPatternView
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
 import com.android.settingslib.spa.framework.theme.SettingsTheme
+import org.evolution.settings.fragments.miscellaneous.ExpressiveTextField
 
 import android.app.Activity
 import android.content.Intent
@@ -650,7 +650,7 @@ fun CredentialSetupDialog(
 
                 when (type) {
                     AppLockCredentialUtils.CREDENTIAL_TYPE_PIN -> {
-                        OutlinedTextField(
+                        ExpressiveTextField(
                             value = currentInput,
                             onValueChange = { input ->
                                 if (input.length <= 8 && input.all { it.isDigit() }) {
@@ -658,26 +658,22 @@ fun CredentialSetupDialog(
                                     errorMessage = ""
                                 }
                             },
-                            label = { Text(stringResource(R.string.app_lock_method_pin)) },
+                            label = stringResource(R.string.app_lock_method_pin),
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
                     AppLockCredentialUtils.CREDENTIAL_TYPE_PASSWORD -> {
-                        OutlinedTextField(
+                        ExpressiveTextField(
                             value = currentInput,
                             onValueChange = { input ->
                                 currentInput = input
                                 errorMessage = ""
                             },
-                            label = { Text(stringResource(R.string.app_lock_method_password)) },
+                            label = stringResource(R.string.app_lock_method_password),
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
