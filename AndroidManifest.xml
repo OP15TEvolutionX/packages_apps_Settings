@@ -302,7 +302,7 @@
 
         <activity android:name="org.evolution.settings.sensorblock.SensorBlockActivity"
                   android:exported="false"
-                  android:label="@string/sensor_block_title"
+                  android:label="@string/sensor_block_screen_title"
                   android:theme="@style/Theme.SubSettings" />
 
         <activity android:name=".SubSettings"

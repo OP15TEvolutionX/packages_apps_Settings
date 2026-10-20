@@ -134,8 +134,8 @@
         <!-- Sensor block: per-package motion and environmental sensor restrictions. -->
         <Preference
             android:key="privacy_sensor_block"
-            android:title="@string/sensor_block_title"
-            android:summary="@string/sensor_block_summary"
+            android:title="@string/sensor_block_screen_title"
+            android:summary="@string/sensor_block_screen_summary"
             android:order="82">
             <intent
                 android:action="android.intent.action.MAIN"
