@@ -142,5 +142,17 @@
                 android:targetPackage="com.android.settings"
                 android:targetClass="org.evolution.settings.sensorblock.SensorBlockActivity" />
         </Preference>
+
+        <!-- Component manager: per-component app blocking. -->
+        <Preference
+            android:key="privacy_component_manager"
+            android:title="@string/component_manager_screen_title"
+            android:summary="@string/component_manager_screen_summary"
+            android:order="83">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="org.evolution.settings.componentmanager.MainActivity" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
