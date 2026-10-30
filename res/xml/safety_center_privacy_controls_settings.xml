@@ -143,6 +143,18 @@
                 android:targetClass="org.evolution.settings.sensorblock.SensorBlockActivity" />
         </Preference>
 
+        <!-- Hide app list: per-package installed app visibility restrictions. -->
+        <Preference
+            android:key="privacy_hide_app_list"
+            android:title="@string/hide_app_list_screen_title"
+            android:summary="@string/hide_app_list_screen_summary"
+            android:order="82">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="org.evolution.settings.hideapps.HideAppsActivity" />
+        </Preference>
+
         <!-- Component manager: per-component app blocking. -->
         <Preference
             android:key="privacy_component_manager"
