@@ -319,7 +319,7 @@
         <service android:name="com.android.settings.network.profiles.NetworkProfilesTileService"
                  android:enabled="false"
                  android:exported="true"
-                 android:icon="@drawable/ic_net_profiles_key"
+                 android:icon="@drawable/ic_vpn_key"
                  android:label="@string/net_profiles_tile"
                  android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
