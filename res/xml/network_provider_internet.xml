@@ -95,17 +95,18 @@
         settings:userRestriction="no_config_vpn"
         settings:useAdminDisabledSummary="true" />
 
-    <!-- Transparent proxy (packages/features/TPROXY). -->
+    <!-- Transparent proxy (packages/features/TPROXY), hidden until enabled over adb. -->
     <Preference
-        android:key="tproxy_settings"
-        android:title="@string/tproxy_title"
-        android:summary="@string/tproxy_summary"
-        android:icon="@drawable/ic_vpn_key"
-        android:order="16">
+        android:key="network_profiles"
+        android:title="@string/net_profiles_title"
+        android:summary="@string/net_profiles_summary"
+        android:icon="@drawable/ic_net_profiles_key"
+        android:order="16"
+        settings:controller="com.android.settings.network.profiles.NetworkProfilesPreferenceController">
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.android.settings"
-            android:targetClass="org.evolution.settings.tproxy.TproxyActivity" />
+            android:targetClass="com.android.settings.network.profiles.NetworkProfilesActivity" />
     </Preference>
 
     <Preference
