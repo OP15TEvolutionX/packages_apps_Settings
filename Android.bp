@@ -62,6 +62,7 @@ android_library {
         ":evolution-clipp-settings-srcs",
         ":evolution-idle-manager-settings-srcs",
         ":evolution-kernel-manager-settings-srcs",
+        ":evolution-tproxy-settings-srcs",
         "Evolver/src/**/*.java",
         "Evolver/src/**/*.kt",
     ],
@@ -80,6 +81,7 @@ android_library {
         "clipp-res",
         "idle-manager-res",
         "kernel-manager-res",
+        "tproxy-res",
         "res",
         "res-export", // for external usage
         "res-product",

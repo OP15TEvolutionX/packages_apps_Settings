@@ -95,6 +95,19 @@
         settings:userRestriction="no_config_vpn"
         settings:useAdminDisabledSummary="true" />
 
+    <!-- Transparent proxy (packages/features/TPROXY). -->
+    <Preference
+        android:key="tproxy_settings"
+        android:title="@string/tproxy_title"
+        android:summary="@string/tproxy_summary"
+        android:icon="@drawable/ic_vpn_key"
+        android:order="16">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.android.settings"
+            android:targetClass="org.evolution.settings.tproxy.TproxyActivity" />
+    </Preference>
+
     <Preference
         android:fragment="com.android.settings.network.PrivateDnsSettings"
         android:key="private_dns_settings"

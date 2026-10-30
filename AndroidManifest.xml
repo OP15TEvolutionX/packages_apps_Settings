@@ -300,6 +300,16 @@
                   android:label="@string/clipboard_access_title"
                   android:theme="@style/Theme.SubSettings" />
 
+        <activity android:name="org.evolution.settings.tproxy.TproxyActivity"
+                  android:exported="false"
+                  android:label="@string/tproxy_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.tproxy.TproxyAppsActivity"
+                  android:exported="false"
+                  android:label="@string/tproxy_apps_title"
+                  android:theme="@style/Theme.SubSettings" />
+
         <activity android:name="org.evolution.settings.sensorblock.SensorBlockActivity"
                   android:exported="false"
                   android:label="@string/sensor_block_screen_title"
