@@ -310,6 +310,11 @@
                   android:label="@string/net_profiles_apps_title"
                   android:theme="@style/Theme.SubSettings" />
 
+        <activity android:name="com.android.settings.network.profiles.NetworkProfilesAdvancedActivity"
+                  android:exported="false"
+                  android:label="@string/net_profiles_advanced"
+                  android:theme="@style/Theme.SubSettings" />
+
         <!-- Enabled at runtime only while the adb flag is set. -->
         <service android:name="com.android.settings.network.profiles.NetworkProfilesTileService"
                  android:enabled="false"
