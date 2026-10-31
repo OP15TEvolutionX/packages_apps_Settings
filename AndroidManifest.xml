@@ -309,19 +309,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.android.settings.network.profiles.NetworkProfilesDialogActivity"
-                  android:exported="false"
-                  android:excludeFromRecents="true"
-                  android:label="@string/net_profiles_title"
-                  android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
-
-        <receiver android:name="com.android.settings.network.profiles.NetworkProfilesToggleReceiver"
+        <provider android:name="com.android.settings.network.profiles.NetworkProfilesControlProvider"
+                  android:authorities="com.android.settings.network.profiles"
                   android:exported="true"
-                  android:permission="android.permission.STATUS_BAR_SERVICE">
-            <intent-filter>
-                <action android:name="com.android.settings.network.profiles.TOGGLE" />
-            </intent-filter>
-        </receiver>
+                  android:permission="android.permission.STATUS_BAR_SERVICE" />
 
         <activity android:name="com.android.settings.network.profiles.NetworkProfilesAppsActivity"
                   android:exported="false"
@@ -345,8 +336,8 @@
             </intent-filter>
             <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
                        android:value="true" />
-            <meta-data android:name="org.evolution.qs.SECONDARY_CLICK_ACTION"
-                       android:value="com.android.settings.network.profiles.TOGGLE" />
+            <meta-data android:name="org.evolution.qs.CONTROL_AUTHORITY"
+                       android:value="com.android.settings.network.profiles" />
         </service>
 
         <receiver android:name="com.android.settings.network.profiles.NetworkProfilesBootReceiver"
