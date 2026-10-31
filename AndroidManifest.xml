@@ -369,16 +369,11 @@
         <activity android:name="org.evolution.settings.componentmanager.MainActivity"
                   android:exported="false"
                   android:label="@string/component_manager_screen_title"
-                  android:taskAffinity="org.evolution.settings.componentmanager"
-                  android:theme="@android:style/Theme.Material.NoActionBar" />
+                  android:theme="@style/Theme.SubSettings" />
 
         <activity android:name="org.evolution.settings.componentmanager.AppActivity"
                   android:exported="false"
-                  android:theme="@android:style/Theme.Material.NoActionBar" />
-
-        <activity android:name="org.evolution.settings.componentmanager.Handbook"
-                  android:exported="false"
-                  android:theme="@android:style/Theme.Material.NoActionBar" />
+                  android:theme="@style/Theme.SubSettings" />
 
         <activity android:name=".SubSettings"
                   android:exported="false"
