@@ -38,7 +38,7 @@
             android:title="@string/evolver_dashboard_title"
             android:summary="@string/evolver_dashboard_summary"
             settings:highlightableMenuKey="@string/menu_key_evolver"
-            settings:controller="org.evolution.settings.TopLevelEvolutionSettingsPreferenceController"/>
+            settings:controller="org.evolution.settings.extrafeatures.TopLevelEvolverPreferenceController"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -279,6 +279,15 @@
             android:summary="@string/accessibility_settings_summary"
             settings:highlightableMenuKey="@string/menu_key_accessibility"
             settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
+
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="org.evolution.settings.extrafeatures.ExtraFeaturesSettings"
+            android:icon="@drawable/ic_homepage_extra_features"
+            android:key="top_level_extra_features"
+            android:order="-15"
+            android:title="@string/extra_features_title"
+            android:summary="@string/extra_features_summary"
+            settings:highlightableMenuKey="@string/menu_key_extra_features"/>
 
         <com.android.settings.widget.HomepagePreference
             android:icon="@drawable/ic_help_filled"

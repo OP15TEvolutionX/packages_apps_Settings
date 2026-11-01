@@ -160,6 +160,13 @@
     <uses-permission android:name="android.permission.CONTROL_SIM_AUTO_PIN_MANAGEMENT" />
     <uses-permission android:name="android.permission.MANAGE_COMPUTER_CONTROL_CONSENT" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
     <application
             android:name=".SettingsApplication"
             android:label="@string/settings_label"
@@ -276,6 +283,92 @@
                   android:taskAffinity=""
                   android:excludeFromRecents="true"
                   android:theme="@*android:style/Theme.DeviceDefault.Dialog.Alert.DayNight"/>
+
+        <provider android:name="org.evolution.settings.clipp.ClippConfigProvider"
+                  android:authorities="com.android.settings.clipp" android:process=":clippconfig"
+                  android:exported="true"
+                  android:permission="android.permission.STATUS_BAR"
+                  android:directBootAware="false" />
+
+        <activity android:name="org.evolution.settings.fragments.routines.RoutinesActivity"
+                  android:exported="false"
+                  android:label="@string/routines"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.clipboardaccess.ClipboardAccessActivity"
+                  android:exported="false"
+                  android:label="@string/clipboard_access_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="com.android.settings.network.profiles.NetworkProfilesActivity"
+                  android:exported="true"
+                  android:label="@string/net_profiles_title"
+                  android:theme="@style/Theme.SubSettings">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+        </activity>
+
+        <provider android:name="com.android.settings.network.profiles.NetworkProfilesControlProvider"
+                  android:authorities="com.android.settings.network.profiles"
+                  android:exported="true"
+                  android:permission="android.permission.STATUS_BAR_SERVICE" />
+
+        <activity android:name="com.android.settings.network.profiles.NetworkProfilesAppsActivity"
+                  android:exported="false"
+                  android:label="@string/net_profiles_apps_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="com.android.settings.network.profiles.NetworkProfilesEditorActivity"
+                  android:exported="false"
+                  android:configChanges="orientation|screenSize|keyboardHidden"
+                  android:windowSoftInputMode="adjustResize"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="com.android.settings.network.profiles.NetworkProfilesAdvancedActivity"
+                  android:exported="false"
+                  android:label="@string/net_profiles_advanced"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <!-- Enabled at runtime only while the adb flag is set. -->
+        <service android:name="com.android.settings.network.profiles.NetworkProfilesTileService"
+                 android:exported="true"
+                 android:icon="@drawable/ic_vpn_key"
+                 android:label="@string/net_profiles_tile"
+                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                       android:value="true" />
+            <meta-data android:name="org.evolution.qs.PREFERENCES_ACTIVITY"
+                       android:value="com.android.settings.network.profiles.NetworkProfilesActivity" />
+            <meta-data android:name="org.evolution.qs.CONTROL_AUTHORITY"
+                       android:value="com.android.settings.network.profiles" />
+        </service>
+
+        <activity android:name="org.evolution.settings.sensorblock.SensorBlockActivity"
+                  android:exported="false"
+                  android:label="@string/sensor_block_screen_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.hideapps.HideAppsActivity"
+                  android:exported="false"
+                  android:label="@string/hide_app_list_screen_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.componentmanager.MainActivity"
+                  android:exported="false"
+                  android:label="@string/component_manager_screen_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.componentmanager.AppActivity"
+                  android:exported="false"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.componentmanager.InfoActivity"
+                  android:exported="false"
+                  android:theme="@style/Theme.SubSettings" />
 
         <activity android:name=".SubSettings"
                   android:exported="false"

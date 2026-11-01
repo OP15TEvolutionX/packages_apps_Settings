@@ -257,6 +257,15 @@
             settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
 
         <com.android.settings.widget.HomepagePreference
+            android:fragment="org.evolution.settings.extrafeatures.ExtraFeaturesSettings"
+            android:icon="@drawable/ic_homepage_extra_features"
+            android:key="top_level_extra_features"
+            android:order="-15"
+            android:title="@string/extra_features_title"
+            android:summary="@string/extra_features_summary"
+            settings:highlightableMenuKey="@string/menu_key_extra_features"/>
+
+        <com.android.settings.widget.HomepagePreference
             android:icon="@drawable/ic_homepage_support"
             android:key="top_level_support"
             android:order="-10"

@@ -56,8 +56,18 @@ android_library {
         "src/**/*.java",
         "src/**/*.kt",
         "src/**/*.aidl",
+        ":evolution-routines-settings-srcs",
+        ":evolution-clipboard-access-settings-srcs",
+        ":evolution-sensor-block-settings-srcs",
+        ":evolution-hide-apps-settings-srcs",
+        ":evolution-component-manager-settings-srcs",
+        ":evolution-clipp-settings-srcs",
+        ":evolution-kernel-manager-settings-srcs",
+        ":evolution-tproxy-settings-srcs",
         "Evolver/src/**/*.java",
         "Evolver/src/**/*.kt",
+        "ExtraFeatures/src/**/*.java",
+        "ExtraFeatures/src/**/*.kt",
     ],
     exclude_srcs: [
         "src/com/android/settings/biometrics/fingerprint2/lib/**/*.kt",
@@ -68,10 +78,19 @@ android_library {
     aaptflags: ["--extra-packages org.evolution.settings"],
 
     resource_dirs: [
+        "routines-res",
+        "clipboard-access-res",
+        "sensor-block-res",
+        "hide-apps-res",
+        "component-manager-res",
+        "clipp-res",
+        "kernel-manager-res",
+        "tproxy-res",
         "res",
         "res-export", // for external usage
         "res-product",
         "Evolver/res",
+        "ExtraFeatures/res",
     ],
 
     asset_dirs: ["Evolver/assets"],
@@ -79,6 +98,16 @@ android_library {
     optional_uses_libs: ["com.android.extensions.appfunctions"],
     static_libs: [
         // External dependencies
+        "androidx.activity_activity-compose",
+        "androidx.compose.animation_animation",
+        "androidx.compose.animation_animation-core",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.material3_material3",
+        "androidx.compose.material_material-icons-core",
+        "androidx.compose.material_material-icons-extended",
+        "androidx.compose.runtime_runtime",
+        "androidx.compose.ui_ui",
+        "kotlinx-coroutines-core",
         "androidx.compose.runtime_runtime-livedata",
         "androidx.dynamicanimation_dynamicanimation",
         "androidx.lifecycle_lifecycle-livedata-ktx",
@@ -238,6 +267,7 @@ android_app {
     ],
     use_embedded_native_libs: true,
     jni_libs: [
+        "libevolution_clipp_jni",
         "libtensorflowlite_jni",
         "libtensorflowlite_gpu_jni",
     ],
