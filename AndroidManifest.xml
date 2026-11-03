@@ -357,6 +357,15 @@
                   android:label="@string/hide_app_list_screen_title"
                   android:theme="@style/Theme.SubSettings" />
 
+        <activity android:name="org.evolution.settings.fingerprintdefender.FingerprintDefenderActivity"
+                  android:exported="false"
+                  android:label="@string/fingerprint_defender_title"
+                  android:theme="@style/Theme.SubSettings" />
+
+        <activity android:name="org.evolution.settings.fingerprintdefender.InfoActivity"
+                  android:exported="false"
+                  android:theme="@style/Theme.SubSettings" />
+
         <activity android:name="org.evolution.settings.componentmanager.MainActivity"
                   android:exported="false"
                   android:label="@string/component_manager_screen_title"

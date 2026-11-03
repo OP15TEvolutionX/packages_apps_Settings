@@ -64,6 +64,7 @@ android_library {
         ":evolution-clipp-settings-srcs",
         ":evolution-kernel-manager-settings-srcs",
         ":evolution-tproxy-settings-srcs",
+        ":evolution-fingerprint-defender-settings-srcs",
         "Evolver/src/**/*.java",
         "Evolver/src/**/*.kt",
         "ExtraFeatures/src/**/*.java",
@@ -86,6 +87,7 @@ android_library {
         "clipp-res",
         "kernel-manager-res",
         "tproxy-res",
+        "fingerprint-defender-res",
         "res",
         "res-export", // for external usage
         "res-product",
